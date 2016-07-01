@@ -3,22 +3,17 @@
  * URL            https://codility.com/programmers/task/binary_gap/
  *
  * Author         Norman Gamage <norman.gamage@gmail.com>
- * Version        1.0
- * Last Update    2016 May 02
+ * Version        2.0
+ * Last Update    2016 Jul 01
  */
 
 function solution(N) {
-  N = N.toString(2).split('').map(Number);
-  var i, max = 0, cnt = 0;
-
-  for (i = 0; i < N.length; i++) {
-    if (N[i] === 1) {
-      max = Math.max(cnt, max);
-      cnt = 0;
-    } else if (N[i] === 0) {
-      cnt++;
-    }
+  var getMaxOfArray = function (numArray) {
+    return Math.max.apply(null, numArray);
   }
 
-  return max;
+  var arr = N.toString(2);
+  arr = arr.substring(arr.indexOf(1), arr.lastIndexOf(1) + 1);
+
+  return getMaxOfArray(arr.split(1).map(function (x) { return x.length; }));
 }
