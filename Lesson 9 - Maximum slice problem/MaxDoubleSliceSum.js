@@ -3,28 +3,25 @@
  * URL            https://codility.com/programmers/task/max_double_slice_sum/
  *
  * Author         Norman Gamage <norman.gamage@gmail.com>
- * Version        1.0
- * Last Update    2016 May 02
- * 
- * Comments       This solution fails in certain performance tests
+ * Version        2.0
+ * Last Update    2016 Jul 02
  */
 
 function solution(A) {
-  var n = A.length, sum = A[1], max = -Infinity, x, y, z;
+  var N = A.length,
+    K1 = Array(N).fill(0), K2 = Array(N).fill(0),
+    i, max = 0;
 
-  for (x = 0; x < n - 2; x++) {
-    if (x > 0) { sum -= A[x - 1]; }
+  for (i = 1; i < N - 1; i++) {
+    K1[i] = Math.max(K1[i - 1] + A[i], 0);
+  }
 
-    for (z = x + 2; z < n; z++) {
-      if (z === x + 2) { sum = A[x + 1]; }
-      if (z > x + 2) { sum += A[z - 1]; }
+  for (i = N - 2; i > 0; i--) {
+    K2[i] = Math.max(K2[i + 1] + A[i], 0);
+  }
 
-      for (y = x + 1; y < z; y++) {
-        if ((sum - A[y]) > max) {
-          max = (sum - A[y]);
-        }
-      }
-    }
+  for (i = 1; i < N - 1; i++) {
+    max = Math.max(max, K1[i - 1] + K2[i + 1]);
   }
 
   return max;

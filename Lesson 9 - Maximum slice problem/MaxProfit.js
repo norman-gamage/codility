@@ -3,34 +3,26 @@
  * URL            https://codility.com/programmers/task/max_profit/
  *
  * Author         Norman Gamage <norman.gamage@gmail.com>
- * Version        1.0
- * Last Update    2016 May 02
- * 
- * Comments       This solution fails in certain performance tests
+ * Version        2.0
+ * Last Update    2016 Jul 02
  */
 
 function solution(A) {
-  // Initialisations
-  var n = A.length, max = -Infinity, maxProfit = 0, i, t;
+  if (A.length === 0) { return 0; }
 
-  // Read input
-  for (i = 0; i < n - 1; i++) {
-    // Current price
-    t = A.shift();
+  var len = A.length - 1,
+    arr = Array(len).fill(0),
+    i, max = 0, max_tmp = 0;
 
-    // Find max price only at, 
-    //    i. start 
-    //   ii. current price is max
-    if (i === 0 || t === max) {
-      max = Math.max.apply(Math, A);
-    }
-
-    // Max profit
-    if (max - t > maxProfit) {
-      maxProfit = max - t;
-    }
+  for (i = 0; i < len; i++) {
+    arr[i] = A[i + 1] - A[i];
   }
 
-  // Output
-  return maxProfit;
+  for (i = 0; i < len; i++) {
+    max_tmp += arr[i];
+    if (max_tmp < 0) { max_tmp = 0; }
+    else if (max_tmp > max) { max = max_tmp; }
+  }
+
+  return max;
 }
